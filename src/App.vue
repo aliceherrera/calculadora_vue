@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
+import Formulario from './components/Formulario.vue';
 
   const estado = reactive({
     filtro: 'adicao',
@@ -41,17 +42,12 @@ import { reactive } from 'vue';
       <h1>Easy Math</h1>
     </header>
     <body>
-      <form>
-          <input @keyup="evento => estado.numeroA = evento.target.value" type="number" placeholder="insira o numero">
-          <select @change="evento => estado.filtro = evento.target.value" class="form-control">
-            <option value="adicao">mais</option>
-            <option value="subtracao">menos</option>
-            <option value="multiplicacao">vezes</option>
-            <option value="divisao">dividido por</option>
-          </select>
-          <input @keyup="evento => estado.numeroB = evento.target.value" type="number" placeholder="insira o numero">
-        </form>
-        <p>Igual a <span>{{ operacao() }}</span></p>
+      <Formulario
+        :primeiro-numero="evento => estado.numeroA = Number(evento.target.value)"
+        :segundo-numero="evento => estado.numeroB = Number(evento.target.value)"
+        :filtra-operacao="evento => estado.filtro = evento.target.value"
+      />
+      <p>Igual a <span>{{ operacao() }}</span></p>
     </body>
     </div>
 </template>
@@ -68,26 +64,6 @@ import { reactive } from 'vue';
   h1 {
     color: #4CE0D2;
     margin-bottom: 24px
-  }
-
-  form input,
-  select {
-    display: flex;
-    margin-bottom: 8px;
-    background: #136F63;
-    color: #FFF;
-    height: 32px;
-    border-radius: 8px;
-    border-style: hidden;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-bottom: 4px;
-    max-width: 200px;
-    width: 100%;
-  }
-
-  ::placeholder{
-    color: #FFF;
   }
 
   span {
